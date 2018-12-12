@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
  * Date:2018/12/11
  * Time:23:46
  */
-public class BaseService {
+public class BaseService<T> {
+
 
 }

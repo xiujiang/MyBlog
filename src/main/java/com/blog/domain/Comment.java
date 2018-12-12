@@ -10,30 +10,29 @@ import java.time.LocalDateTime;
 
 /**
  * author:xiujiang.liu
- * Date:2018/12/11
- * Time:23:38
+ * Date:2018/12/12
+ * Time:23:41
  */
 @Entity
-@Table(name = "user")
+@Table(name = "comment")
 @Data
-public class User {
+public class Comment {
     @Id
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "article_id")
+    private int articleId;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "reply_author_id")
+    private int replyAuthorId;
 
-    @Column(name="create_time")
+    @Column(name = "content")
+    private int content;
+
+    @Column(name = "create_time")
     private LocalDateTime createTime;
 
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
-
-    @Column(name = "remark")
-    private String remark;
-
 
 }
