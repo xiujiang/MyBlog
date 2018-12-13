@@ -1,6 +1,7 @@
 package com.blog.controller;
 
 import com.blog.base.BaseController;
+import com.blog.base.BaseService;
 import com.blog.domain.Comment;
 import com.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/comment")
-public class CommentController extends BaseController {
+public class CommentController extends BaseController<Comment> {
     @Autowired
-    CommentService commentService;
-
-    @PostMapping("/add")
-    public void add(Comment comment){
-        commentService.add(comment);
+    public CommentController(CommentService commentService) {
+        super(commentService);
     }
 
 }

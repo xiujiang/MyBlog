@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * Time:23:45
  */
 @Service
-public class UserService extends BaseService {
+public class UserService extends BaseService<User> {
 
     @Autowired
     UserDao userDao;

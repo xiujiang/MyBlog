@@ -12,12 +12,8 @@ import org.springframework.stereotype.Service;
  * Time:23:47
  */
 @Service
-public class ArticleService extends BaseService {
+public class ArticleService extends BaseService<Article> {
 
     @Autowired
     ArticleDao articleDao;
-
-    public void add(Article article){
-        this.articleDao.save(article);
-    }
 }

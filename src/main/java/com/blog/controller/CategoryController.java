@@ -1,6 +1,7 @@
 package com.blog.controller;
 
 import com.blog.base.BaseController;
+import com.blog.base.BaseService;
 import com.blog.domain.Category;
 import com.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/category")
-public class CategoryController extends BaseController {
-    @Autowired
-    CategoryService categoryService;
+public class CategoryController extends BaseController<Category> {
 
-    @PostMapping("/add")
-    public void add(Category category){
-        categoryService.add(category);
+    @Autowired
+    public CategoryController(CategoryService categoryService) {
+        super(categoryService);
     }
 }

@@ -1,5 +1,6 @@
 package com.blog.dao;
 
+import com.blog.base.BaseDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.blog.domain.User;
 /**
@@ -7,6 +8,6 @@ import com.blog.domain.User;
  * Date:2018/12/11
  * Time:23:41
  */
-public interface UserDao extends JpaRepository<User, Long> {
+public interface UserDao extends BaseDao<User> {
 
 }

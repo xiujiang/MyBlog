@@ -12,12 +12,8 @@ import org.springframework.stereotype.Service;
  * Time:23:45
  */
 @Service
-public class CategoryService extends BaseService {
+public class CategoryService extends BaseService<Category> {
 
     @Autowired
     CategoryDao categoryDao;
-
-    public void add(Category category){
-        categoryDao.save(category);
-    }
 }

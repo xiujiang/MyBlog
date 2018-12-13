@@ -12,12 +12,9 @@ import org.springframework.stereotype.Service;
  * Time:23:48
  */
 @Service
-public class CommentService extends BaseService {
+public class CommentService extends BaseService<Comment> {
 
     @Autowired
     CommentDao commentDao;
 
-    public void add(Comment comment){
-        this.commentDao.save(comment);
-    }
 }

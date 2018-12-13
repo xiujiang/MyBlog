@@ -1,6 +1,7 @@
 package com.blog.controller;
 
 import com.blog.base.BaseController;
+import com.blog.base.BaseService;
 import com.blog.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +18,14 @@ import com.blog.service.UserService;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController {
+public class UserController extends BaseController<User> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
+    public UserController(UserService userService) {
+        super(userService);
+        this.userService= userService;
+    }
     UserService userService;
-
     @PostMapping("/login")
     public void login(User user){
         logger.info("user信息为:{}",user);
