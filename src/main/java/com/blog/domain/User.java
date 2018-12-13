@@ -1,5 +1,6 @@
 package com.blog.domain;
 
+import com.blog.base.BaseDomain;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user")
 @Data
-public class User {
+public class User extends BaseDomain {
     @Id
     private int id;
 

@@ -17,8 +17,9 @@ public abstract class BaseController<T> {
     }
 
     @PostMapping("/add")
-    public void add(T data){
-        service.add(data);
+    public T add(T data){
+        data = service.add(data);
+        return data;
     }
 
 }

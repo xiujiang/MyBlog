@@ -15,5 +15,7 @@ import org.springframework.stereotype.Service;
 public class CategoryService extends BaseService<Category> {
 
     @Autowired
-    CategoryDao categoryDao;
+    public CategoryService(CategoryDao categoryDao) {
+        super(categoryDao);
+    }
 }

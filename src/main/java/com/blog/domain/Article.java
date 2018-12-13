@@ -1,8 +1,7 @@
 package com.blog.domain;
 
+import com.blog.base.BaseDomain;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,7 +16,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "article")
 @Data
-public class Article {
+public class Article extends BaseDomain {
+
     @Id
     private int id;
 

@@ -13,9 +13,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService extends BaseService<User> {
-
-    @Autowired
     UserDao userDao;
+    @Autowired
+    public UserService(UserDao userDao) {
+        super(userDao);
+        this.userDao=userDao;
+    }
+
 
     public void save(User user){
         userDao.save(user);

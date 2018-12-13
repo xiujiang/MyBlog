@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class CommentService extends BaseService<Comment> {
 
     @Autowired
-    CommentDao commentDao;
-
+    public CommentService(CommentDao commentDao) {
+        super(commentDao);
+    }
 }

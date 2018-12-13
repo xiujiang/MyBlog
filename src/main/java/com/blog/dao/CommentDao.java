@@ -2,7 +2,6 @@ package com.blog.dao;
 
 import com.blog.base.BaseDao;
 import com.blog.domain.Comment;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * author:xiujiang.liu

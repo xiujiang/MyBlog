@@ -15,5 +15,8 @@ import org.springframework.stereotype.Service;
 public class ArticleService extends BaseService<Article> {
 
     @Autowired
-    ArticleDao articleDao;
+    public ArticleService(ArticleDao articleDao){
+        super(articleDao);
+    }
+
 }
