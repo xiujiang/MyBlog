@@ -2,10 +2,8 @@ package com.blog.domain;
 
 import com.blog.base.BaseDomain;
 import lombok.Data;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -33,9 +31,26 @@ public class Article extends BaseDomain {
     @Column(name = "click_num")
     private int clickNum;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
+
+    @Transient
+    private String content;
+
+    public Article(String title, int authorId, int contentId, String description,int clickNum) {
+        this.title = title;
+        this.authorId = authorId;
+        this.contentId = contentId;
+        this.clickNum = clickNum;
+        this.description = description;
+    }
+
+    public Article() {
+    }
 }

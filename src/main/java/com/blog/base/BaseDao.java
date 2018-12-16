@@ -8,6 +8,7 @@ package com.blog.base;/*
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -17,5 +18,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @since 1.8
  */
 @NoRepositoryBean
-public interface BaseDao<T> extends JpaRepository<T,Long> {
+public interface BaseDao<T> extends JpaRepository<T,Integer> {
+
 }

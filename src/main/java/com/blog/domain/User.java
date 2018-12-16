@@ -27,6 +27,9 @@ public class User extends BaseDomain {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name="create_time")
     private LocalDateTime createTime;
 
@@ -36,5 +39,15 @@ public class User extends BaseDomain {
     @Column(name = "remark")
     private String remark;
 
+    public User() {
+    }
 
+    public User(String name, String password, String email, LocalDateTime createTime, LocalDateTime lastUpdateTime, String remark) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.createTime = createTime;
+        this.lastUpdateTime = lastUpdateTime;
+        this.remark = remark;
+    }
 }

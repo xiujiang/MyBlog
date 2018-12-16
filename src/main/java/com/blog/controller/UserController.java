@@ -1,14 +1,17 @@
 package com.blog.controller;
 
 import com.blog.base.BaseController;
-import com.blog.base.BaseService;
+import com.blog.base.Response;
 import com.blog.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 import com.blog.service.UserService;
 
 /**
@@ -16,7 +19,7 @@ import com.blog.service.UserService;
  * Date:2018/12/11
  * Time:23:49
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController extends BaseController<User> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,11 +29,34 @@ public class UserController extends BaseController<User> {
         this.userService= userService;
     }
     UserService userService;
-    @PostMapping("/login")
-    public void login(User user){
+    @GetMapping("/login")
+    public Response login(String email,String password){
+        User user = new User(null,password,email,null,null,null);
         logger.info("user信息为:{}",user);
-        userService.save(user);
-        logger.info("登录成功");
+        if(ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPassword())){
+            return new Response("10","用户名或密码错误",null);
+        }
+        if(this.userService.getUserByEmail(user)){
+            logger.info("登录成功");
+            return new Response().success(null);
+        }else{
+            logger.info("登录失败");
+            return new Response("10","用户名或密码错误",null);
+        }
+    }
+
+    @GetMapping("/register")
+    public Response register(User user){
+        logger.info("user信息为:{}",user);
+        if(ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPassword())){
+            return new Response("10","注册信息不完整",null);
+        }
+        boolean b = this.userService.getUserByEmail(user);
+        if(!b){
+            return new Response("10","当前邮箱已经注册，请登录",null);
+        }
+        this.userService.add(user);
+        return new Response("00","注册成功",user);
     }
 
 }

@@ -2,6 +2,7 @@ package com.blog.dao;
 
 import com.blog.base.BaseDao;
 import com.blog.domain.Article;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * author:xiujiang.liu
@@ -9,5 +10,4 @@ import com.blog.domain.Article;
  * Time:23:44
  */
 public interface ArticleDao extends BaseDao<Article> {
-
 }
