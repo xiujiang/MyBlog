@@ -9,12 +9,12 @@ import lombok.Data;
  */
 
 @Data
-public class Response {
+public class Response<T> {
     private String code;
     private String msg;
-    private Object data;
+    private T data;
 
-    public Response(String code,String msg,Object data){
+    public Response(String code,String msg,T data){
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -23,7 +23,7 @@ public class Response {
     public Response(){
     }
 
-    public Response success(Object data){
+    public Response success(T data){
         return new Response("00","success",data);
     }
 

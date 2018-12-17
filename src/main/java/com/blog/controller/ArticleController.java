@@ -96,11 +96,14 @@ public class ArticleController extends BaseController<Article> {
      */
     @PostMapping("/articleInfo")
     public Response getContentById(int articleId){
+        logger.info("id:{}",articleId);
         Article article = this.articleService.get(articleId);
         if(ObjectUtils.isEmpty(article)){
             return new Response("10","文章不存在",null);
         }
+        logger.info("article:{}",article);
         Content content = this.contentService.get(article.getContentId());
+        logger.info("content:{}",content);
         if(!ObjectUtils.isEmpty(content)){
             article.setContent(content.getContent());
         }

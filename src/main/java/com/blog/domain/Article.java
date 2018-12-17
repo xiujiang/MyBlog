@@ -1,9 +1,11 @@
 package com.blog.domain;
 
 import com.blog.base.BaseDomain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -14,9 +16,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "article")
 @Data
-public class Article extends BaseDomain {
+public class Article extends BaseDomain implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "title")

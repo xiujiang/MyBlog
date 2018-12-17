@@ -3,10 +3,7 @@ package com.blog.domain;
 import com.blog.base.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -16,10 +13,11 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Data
-@Table(name = "content")
+@Table(name = "article_content")
 public class Content extends BaseDomain {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**
@@ -38,5 +36,6 @@ public class Content extends BaseDomain {
         this.content = content;
     }
 
+    public Content(){}
 
 }

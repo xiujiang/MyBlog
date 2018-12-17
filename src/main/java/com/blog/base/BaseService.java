@@ -1,9 +1,11 @@
 package com.blog.base;
 
 import org.apache.tomcat.jni.Local;
+import org.springframework.data.domain.Example;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * author:xiujiang.liu
@@ -23,7 +25,7 @@ public abstract class BaseService<T> {
             ((BaseDomain) data).setCreateTime(LocalDateTime.now());
             ((BaseDomain) data).setLastUpdateTime(LocalDateTime.now());
         }
-        data = this.dao.save(data);
+        data = this.dao.saveAndFlush(data);
 
         System.out.println("data:"+data);
 
@@ -46,7 +48,12 @@ public abstract class BaseService<T> {
         if (id == 0) {
             return null;
         }
-        return this.dao.getOne( id);
+        Optional<T> t = this.dao.findById(id);
+        if(t.isPresent()){
+            return t.get();
+        }else{
+            return null;
+        }
     }
 
 }

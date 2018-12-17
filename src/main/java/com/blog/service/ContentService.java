@@ -7,6 +7,8 @@ import com.blog.domain.Content;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * author:xiujiang.liu
  * Date:2018/12/16
@@ -24,10 +26,11 @@ public class ContentService extends BaseService<Content> {
     }
 
     public void update(int id,String content){
-        Content oldContent = this.contentDao.getOne( id);
-        oldContent.setContent(content);
-        this.update(oldContent);
+        Optional<Content> oldContent = this.contentDao.findById(id);
+        if(oldContent.isPresent()){
+            Content content1 = oldContent.get();
+            content1.setContent(content);
+            this.update(content1);
+        }
     }
-
-
 }
