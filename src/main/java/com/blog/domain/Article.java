@@ -22,19 +22,25 @@ public class Article extends BaseDomain implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "author_id")
-    private int authorId;
+    private Integer authorId;
+
+    @Column(name = "category_id")
+    private Integer categoryId;
 
     @Column(name = "content_id")
-    private int contentId;
+    private Integer contentId;
+
+    @Column(name = "status")
+    private Enum status;
 
     @Column(name = "click_num")
-    private int clickNum;
+    private Integer clickNum;
 
     @Column(name = "description")
     private String description;
@@ -45,15 +51,18 @@ public class Article extends BaseDomain implements Serializable {
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
 
+
     @Transient
     private String content;
 
-    public Article(String title, int authorId, int contentId, String description,int clickNum) {
+    public Article(String title, Integer authorId, Integer categoryId,Integer contentId, String description,Integer clickNum,Enum status) {
         this.title = title;
         this.authorId = authorId;
+        this.categoryId = categoryId;
         this.contentId = contentId;
         this.clickNum = clickNum;
         this.description = description;
+        this.status = status;
     }
 
     public Article() {

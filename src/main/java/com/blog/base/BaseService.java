@@ -5,6 +5,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,6 +26,7 @@ public abstract class BaseService<T> {
             ((BaseDomain) data).setCreateTime(LocalDateTime.now());
             ((BaseDomain) data).setLastUpdateTime(LocalDateTime.now());
         }
+
         data = this.dao.saveAndFlush(data);
 
         System.out.println("data:"+data);
@@ -36,8 +38,8 @@ public abstract class BaseService<T> {
         if(data instanceof BaseDomain){
             ((BaseDomain) data).setLastUpdateTime(LocalDateTime.now());
         }
-        T newData = this.dao.getOne(((BaseDomain)data).getId());
-        if(ObjectUtils.isEmpty(newData)){
+        Optional<T> newData = this.dao.findById(((BaseDomain)data).getId());
+        if(newData.isPresent()){
             return data;
         }
         data = this.dao.save(data);
@@ -54,6 +56,10 @@ public abstract class BaseService<T> {
         }else{
             return null;
         }
+    }
+
+    public List<T> findAll(){
+        return this.dao.findAll();
     }
 
 }

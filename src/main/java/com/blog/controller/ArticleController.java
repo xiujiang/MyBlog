@@ -5,9 +5,11 @@ import com.blog.base.BaseService;
 import com.blog.base.Response;
 import com.blog.domain.Article;
 import com.blog.domain.Content;
+import com.blog.enums.ArticleEnum;
 import com.blog.service.ArticleService;
 import com.blog.service.ContentService;
 import com.blog.service.UserService;
+import org.omg.PortableInterceptor.ACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -49,7 +47,8 @@ public class ArticleController extends BaseController<Article> {
     ContentService contentService;
 
     @PostMapping("/addArticle")
-    public Response addArticle(Integer authorId, String title, String content){
+    @ResponseBody
+    public Response addArticle(Integer authorId,Integer categoryId, String title, String content){
 
         logger.info("authorId:{},title:{},content:{}",authorId,title,content);
 
@@ -62,21 +61,38 @@ public class ArticleController extends BaseController<Article> {
 
         Content newContent = new Content(content);
         newContent = contentService.add(newContent);
-        Article article = new Article(title,authorId,newContent.getId(),content.substring(0,content.length()>=60?60:content.length())+".....",0);
+        Article article = new Article(title,authorId,categoryId,newContent.getId(),content.substring(0,content.length()>=60?60:content.length())+".....",0, ArticleEnum.ACTIVE);
         articleService.add(article);
         return new Response().success(article);
     }
 
     @PostMapping("/updateArticle")
-    public Response updateArticle(Article article,String content){
-        int contentId = article.getContentId();
-        if (contentId != 0) {
+    @ResponseBody
+    public Response updateArticle(int articleId,String title,String content){
+        Article article = articleService.get(articleId);
+        if (!StringUtils.isEmpty(content)) {
+            article.setDescription(content.substring(0,content.length()>=60?60:content.length())+".....");
             contentService.update(article.getContentId(),content);
         }
-
+        if(!StringUtils.isEmpty(title) && !title.equals(article.getTitle())){
+            article.setTitle(title);
+        }
         this.articleService.update(article);
         return new Response().success(article);
     }
+
+    /**
+     * 根据分类信息查询文章
+     * @param pageNum
+     * @param categoryId
+     * @return
+     */
+    public Response findAllByCategory(int pageNum,int categoryId){
+        Page<Article> articles = articleService.findAll(pageNum,20,new Article(null,null,categoryId,null,null,null,null));
+        return new Response().success(articles);
+    }
+
+
 
     /**
      * 分页查询文章
@@ -84,8 +100,9 @@ public class ArticleController extends BaseController<Article> {
      * @return
      */
     @PostMapping("/findAllArticle")
+    @ResponseBody
     public Response findAllArticle(int pageNum){
-        Page<Article> articlePage = this.articleService.findAll(pageNum,20);
+        Page<Article> articlePage = this.articleService.findAll(pageNum,20,new Article());
         return new Response().success(articlePage);
     }
 
@@ -95,6 +112,7 @@ public class ArticleController extends BaseController<Article> {
      * @return
      */
     @PostMapping("/articleInfo")
+    @ResponseBody
     public Response getContentById(int articleId){
         logger.info("id:{}",articleId);
         Article article = this.articleService.get(articleId);
