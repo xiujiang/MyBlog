@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public abstract class BaseDomain {
-    private int id;
+    private Integer id;
 
     private LocalDateTime createTime;
 

@@ -1,6 +1,7 @@
 package com.blog.domain;
 
 import com.blog.base.BaseDomain;
+import com.blog.enums.ArticleEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -37,7 +38,8 @@ public class Article extends BaseDomain implements Serializable {
     private Integer contentId;
 
     @Column(name = "status")
-    private Enum status;
+    @Convert(converter = ArticleEnum.AsCode.class)
+    private ArticleEnum status;
 
     @Column(name = "click_num")
     private Integer clickNum;
@@ -55,7 +57,7 @@ public class Article extends BaseDomain implements Serializable {
     @Transient
     private String content;
 
-    public Article(String title, Integer authorId, Integer categoryId,Integer contentId, String description,Integer clickNum,Enum status) {
+    public Article(String title, Integer authorId, Integer categoryId,Integer contentId, String description,Integer clickNum,ArticleEnum status) {
         this.title = title;
         this.authorId = authorId;
         this.categoryId = categoryId;

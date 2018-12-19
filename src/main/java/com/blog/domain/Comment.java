@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Comment extends BaseDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "article_id")
     private int articleId;

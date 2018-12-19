@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Category extends BaseDomain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;

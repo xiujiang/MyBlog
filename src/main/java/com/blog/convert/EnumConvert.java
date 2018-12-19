@@ -21,8 +21,7 @@ import java.lang.reflect.Method;
  * @datetime 2018/12/18
  * @since 1.8
  */
-@Convert
-public abstract class EnumConvert<T extends BaseEnum> implements AttributeConverter<T,Integer> {
+public class EnumConvert<T extends BaseEnum> implements AttributeConverter<T,Integer> {
 
     private Method method;
 
