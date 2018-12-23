@@ -26,12 +26,5 @@ public class BlogApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(BlogApplication.class,args);
-        ConfigurableListableBeanFactory configurableListableBeanFactory = ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
-        System.out.println(configurableListableBeanFactory.getRegisteredScopeNames());
-        Iterator iterator = configurableListableBeanFactory.getBeanNamesIterator();
-        while(iterator.hasNext()){
-            System.out.println(iterator.next());
-        }
-
     }
 }

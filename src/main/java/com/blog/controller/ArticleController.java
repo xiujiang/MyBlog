@@ -103,6 +103,7 @@ public class ArticleController extends BaseController<Article> {
     @ResponseBody
     public Response findAllArticle(int pageNum){
         Page<Article> articlePage = this.articleService.findAll(pageNum,20,new Article());
+        logger.info("articlePage"+articlePage);
         return new Response().success(articlePage);
     }
 
