@@ -36,9 +36,11 @@ public class UserController extends BaseController<User> {
         if(ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPassword())){
             return new Response("10","用户名或密码错误",null);
         }
-        if(this.userService.getUserByEmail(user)){
+        User loginUser = this.userService.getUserByEmail(user);
+        if(!ObjectUtils.isEmpty(loginUser)){
             logger.info("登录成功");
-            return new Response().success(null);
+            loginUser.setPassword("");
+            return new Response().success(loginUser);
         }else{
             logger.info("登录失败");
             return new Response("10","用户名或密码错误",null);
@@ -51,8 +53,8 @@ public class UserController extends BaseController<User> {
         if(ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPassword())){
             return new Response("10","注册信息不完整",null);
         }
-        boolean b = this.userService.getUserByEmail(user);
-        if(!b){
+        User regisgUser = this.userService.getUserByEmail(user);
+        if(ObjectUtils.isEmpty(regisgUser)){
             return new Response("10","当前邮箱已经注册，请登录",null);
         }
         this.userService.add(user);

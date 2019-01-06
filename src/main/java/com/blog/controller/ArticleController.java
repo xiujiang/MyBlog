@@ -46,7 +46,7 @@ public class ArticleController extends BaseController<Article> {
     @Autowired
     ContentService contentService;
 
-    @PostMapping("/addArticle")
+    @GetMapping("/addArticle")
     @ResponseBody
     public Response addArticle(Integer authorId,Integer categoryId, String title, String content){
 
@@ -66,7 +66,7 @@ public class ArticleController extends BaseController<Article> {
         return new Response().success(article);
     }
 
-    @PostMapping("/updateArticle")
+    @GetMapping("/updateArticle")
     @ResponseBody
     public Response updateArticle(int articleId,String title,String content){
         Article article = articleService.get(articleId);
@@ -87,6 +87,7 @@ public class ArticleController extends BaseController<Article> {
      * @param categoryId
      * @return
      */
+    @GetMapping("/findAllByCategory")
     public Response findAllByCategory(int pageNum,int categoryId){
         Page<Article> articles = articleService.findAll(pageNum,20,new Article(null,null,categoryId,null,null,null,null));
         return new Response().success(articles);
@@ -99,10 +100,10 @@ public class ArticleController extends BaseController<Article> {
      * @param pageNum
      * @return
      */
-    @PostMapping("/findAllArticle")
+    @GetMapping("/findAllArticle")
     @ResponseBody
     public Response findAllArticle(int pageNum){
-        Page<Article> articlePage = this.articleService.findAll(pageNum,20,new Article());
+        Page<Article> articlePage = this.articleService.findAll(pageNum,10,new Article());
         logger.info("articlePage"+articlePage);
         return new Response().success(articlePage);
     }
@@ -112,7 +113,7 @@ public class ArticleController extends BaseController<Article> {
      * @param articleId
      * @return
      */
-    @PostMapping("/articleInfo")
+    @GetMapping("/articleInfo")
     @ResponseBody
     public Response getContentById(int articleId){
         logger.info("id:{}",articleId);

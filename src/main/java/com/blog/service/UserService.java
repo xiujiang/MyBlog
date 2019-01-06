@@ -24,13 +24,13 @@ public class UserService extends BaseService<User> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserDao userDao;
-    public boolean getUserByEmail(User user){
+    public User getUserByEmail(User user){
         logger.info("用户信息1为:{}",user);
         User thisUser = this.userDao.findUserByEmailAndPsd(user.getEmail(),user.getPassword());
         if(ObjectUtils.isEmpty(thisUser)){
-            return false;
+            return null;
         }else{
-            return true;
+            return thisUser;
         }
     }
 
