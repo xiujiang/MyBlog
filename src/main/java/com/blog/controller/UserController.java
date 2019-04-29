@@ -54,8 +54,11 @@ public class UserController extends BaseController<User> {
             return new Response("10","注册信息不完整",null);
         }
         User regisgUser = this.userService.getUserByEmail(user);
-        if(ObjectUtils.isEmpty(regisgUser)){
+        if(!ObjectUtils.isEmpty(regisgUser)){
             return new Response("10","当前邮箱已经注册，请登录",null);
+        }
+        if(ObjectUtils.isEmpty(user.getName())){
+            user.setName("用户"+System.currentTimeMillis());
         }
         this.userService.add(user);
         return new Response("00","注册成功",user);

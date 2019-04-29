@@ -46,7 +46,7 @@ public class ArticleController extends BaseController<Article> {
     @Autowired
     ContentService contentService;
 
-    @GetMapping("/addArticle")
+    @PostMapping("/addArticle")
     @ResponseBody
     public Response addArticle(Integer authorId,Integer categoryId, String title, String content){
 
@@ -66,7 +66,7 @@ public class ArticleController extends BaseController<Article> {
         return new Response().success(article);
     }
 
-    @GetMapping("/updateArticle")
+    @PostMapping("/updateArticle")
     @ResponseBody
     public Response updateArticle(int articleId,String title,String content){
         Article article = articleService.get(articleId);
