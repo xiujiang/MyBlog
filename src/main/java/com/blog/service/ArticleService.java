@@ -42,6 +42,9 @@ public class ArticleService extends BaseService<Article> {
         Example<Article> articleExample = Example.of(article);
         Page<Article> pageArticle = this.articleDao.findAll(articleExample,pageable);
         pageArticle.stream().forEach(a->{
+            if(ObjectUtils.isEmpty(a.getContentId())){
+                return;
+            }
             Content content = contentService.get(a.getContentId());
             if(!ObjectUtils.isEmpty(content)){
                 a.setContent(content.getContent());
