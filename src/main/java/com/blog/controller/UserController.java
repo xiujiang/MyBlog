@@ -64,4 +64,14 @@ public class UserController extends BaseController<User> {
         return new Response("00","注册成功",user);
     }
 
+    @GetMapping("/login/out")
+    public Response loginOut(String token){
+        logger.info("token信息为:{}",token);
+        if(ObjectUtils.isEmpty(token)){
+            return new Response("10","退出失败",null);
+        }
+        //先用redis退出吧
+        return new Response("00","退出成功",null);
+    }
+
 }

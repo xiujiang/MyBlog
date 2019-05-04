@@ -48,28 +48,36 @@ public class ArticleController extends BaseController<Article> {
 
     @PostMapping("/addArticle")
     @ResponseBody
-    public Response addArticle(Integer authorId,Integer categoryId, String title, String content){
+    public Response addArticle(@RequestBody Article article){
+        logger.info("article:{}",article);
+//        logger.info("authorId:{},title:{},content:{}",authorId,title,content);
 
-        logger.info("authorId:{},title:{},content:{}",authorId,title,content);
+//        if(authorId == 0 || StringUtils.isEmpty(title) || StringUtils.isEmpty(content)){
+//            return new Response("10","文章信息为空",null);
+//        }
+//        if(!userService.isExist(authorId)){
+//            return new Response("10","用户信息不存在",null);
+//        }
 
-        if(authorId == 0 || StringUtils.isEmpty(title) || StringUtils.isEmpty(content)){
-            return new Response("10","文章信息为空",null);
-        }
-        if(!userService.isExist(authorId)){
-            return new Response("10","用户信息不存在",null);
-        }
-
-        Content newContent = new Content(content);
+        Content newContent = new Content(article.getContent());
         newContent = contentService.add(newContent);
-        Article article = new Article(title,authorId,categoryId,newContent.getId(),content.substring(0,content.length()>=60?60:content.length())+".....",0, ArticleEnum.ACTIVE);
+//        Article article = new Article(title,authorId,categoryId,newContent.getId(),description,0, ArticleEnum.ACTIVE);
+        article.setContentId(newContent.getId());
+        article.setStatus(ArticleEnum.ACTIVE);
         articleService.add(article);
         return new Response().success(article);
     }
 
     @PostMapping("/updateArticle")
     @ResponseBody
-    public Response updateArticle(int articleId,String title,String content){
+    public Response updateArticle(int articleId,String title,String content,int authorId){
         Article article = articleService.get(articleId);
+        if(ObjectUtils.isEmpty(article)){
+            return new Response().success(null);
+        }
+        if(article.getAuthorId() != authorId){
+            return new Response().error("不存在该帖子",null);
+        }
         if (!StringUtils.isEmpty(content)) {
             article.setDescription(content.substring(0,content.length()>=60?60:content.length())+".....");
             contentService.update(article.getContentId(),content);
@@ -88,7 +96,7 @@ public class ArticleController extends BaseController<Article> {
      * @return
      */
     @GetMapping("/findAllByCategory")
-    public Response findAllByCategory(int pageNum,int categoryId){
+    public Response findAllByCategory(int pageNum,int categoryId,int authorId){
         Page<Article> articles = articleService.findAll(pageNum,20,new Article(null,null,categoryId,null,null,null,null));
         return new Response().success(articles);
     }
@@ -102,8 +110,13 @@ public class ArticleController extends BaseController<Article> {
      */
     @GetMapping("/findAllArticle")
     @ResponseBody
-    public Response findAllArticle(int pageNum){
-        Page<Article> articlePage = this.articleService.findAll(pageNum,10,new Article());
+    public Response findAllArticle(int pageNum,int authorId,int categoryId){
+        Article article = new Article();
+        article.setAuthorId(authorId);
+        if(categoryId != 0){
+            article.setCategoryId(categoryId);
+        }
+        Page<Article> articlePage = this.articleService.findAll(pageNum,10,article);
         logger.info("articlePage"+articlePage);
         return new Response().success(articlePage);
     }
@@ -115,7 +128,7 @@ public class ArticleController extends BaseController<Article> {
      */
     @GetMapping("/articleInfo")
     @ResponseBody
-    public Response getContentById(int articleId){
+    public Response getContentById(int articleId,int authorId){
         logger.info("id:{}",articleId);
         Article article = this.articleService.get(articleId);
         if(ObjectUtils.isEmpty(article)){

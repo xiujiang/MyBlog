@@ -26,6 +26,7 @@ public class CategoryController extends BaseController<Category> {
     @Autowired
     public CategoryController(CategoryService categoryService) {
         super(categoryService);
+        this.categoryService = categoryService;
     }
 
 

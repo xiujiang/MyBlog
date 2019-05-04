@@ -26,6 +26,9 @@ public class Response<T> {
     public Response success(T data){
         return new Response("00","success",data);
     }
+    public Response error(String err,T data){
+        return new Response("10",err,data);
+    }
 
     @Override
     public String toString() {
