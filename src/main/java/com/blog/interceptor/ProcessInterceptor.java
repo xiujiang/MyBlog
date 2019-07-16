@@ -18,6 +18,9 @@ public class ProcessInterceptor implements HandlerInterceptor {
         public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
             logger.info("执行拦截请求:...............{}",httpServletRequest.getMethod());
+            logger.info("执行的方法为:{}",httpServletRequest.getRequestURL());
+            logger.info("接收的参数为:{}",httpServletRequest.getInputStream());
+            logger.info("接收长度为:{}",httpServletRequest.getContentLength());
             httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
       
             httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");  
@@ -33,15 +36,13 @@ public class ProcessInterceptor implements HandlerInterceptor {
                 httpServletResponse.setStatus(200);  
                 return false;  
             }  
-      
-            System.out.println(method);  
-      
-            return true;  
+            return true;
         }  
       
         @Override  
         public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-      
+            logger.info("执行后拦截,请求为:{},方法为{}...............",httpServletRequest.getMethod(),httpServletRequest.getRequestURL());
+            logger.info("执行完成，结果为:{}",httpServletResponse.getStatus(),httpServletResponse.getHeaderNames());
         }  
       
         @Override  

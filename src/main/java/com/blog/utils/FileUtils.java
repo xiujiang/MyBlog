@@ -6,6 +6,9 @@ import org.springframework.util.ObjectUtils;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 提供文件的上传下载
@@ -16,15 +19,29 @@ import java.time.format.DateTimeFormatter;
  */
 public class FileUtils {
 
-    private static final String FAR_SERVICE_DIR = "/data/test/";
+    private static final String FAR_SERVICE_DIR = SystemUtils.getSystemUploadPath();
 
     public static String upload(String data, FileEnum fileEnum, String suffix, String prefix){
         if(FileEnum.PICTURE.equals(fileEnum)){
+             return upload(new ByteArrayInputStream(data.getBytes()),fileEnum,suffix,prefix);
+        }
+
+        return null;
+    }
+
+    public static String upload(InputStream inputStream, FileEnum fileEnum, String suffix, String prefix) {
+        if(FileEnum.PICTURE.equals(fileEnum)){
             String fileName = getFileName(suffix,prefix);
             File file = new File(FAR_SERVICE_DIR+fileName);
+            if(!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             FileOutputStream outputStream = null;
             try {
-                InputStream inputStream = new ByteArrayInputStream(data.getBytes());
                 outputStream = new FileOutputStream(file);
                 byte[] bytes = new byte[1024];
                 int length = -1;
@@ -50,13 +67,14 @@ public class FileUtils {
         return null;
     }
 
+
     /**
      * 格式为：前缀+时间+随机数.后缀
      * @param suffix
      * @param prefix
      * @return
      */
-    public static String getFileName(String suffix,String prefix) {
+    private static String getFileName(String suffix,String prefix) {
         StringBuffer buffer = new StringBuffer();
         if (!ObjectUtils.isEmpty(prefix)) {
             buffer.append(buffer);
@@ -73,6 +91,9 @@ public class FileUtils {
         }
         return buffer.toString();
     }
+
+
+
 
     public static void main(String[] args) {
         System.out.println((int)(Math.random()*10000));
