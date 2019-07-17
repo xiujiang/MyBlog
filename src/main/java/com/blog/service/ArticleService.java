@@ -7,10 +7,7 @@ import com.blog.domain.Content;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -38,7 +35,7 @@ public class ArticleService extends BaseService<Article> {
 
 
     public Page<Article> findAll(int pageNum,int size,Article article){
-        Pageable pageable = PageRequest.of(pageNum,size);
+        Pageable pageable = PageRequest.of(pageNum,size,Sort.by(Sort.Direction.DESC,"createTime"));
         Example<Article> articleExample = Example.of(article);
         Page<Article> pageArticle = this.articleDao.findAll(articleExample,pageable);
         pageArticle.stream().forEach(a->{

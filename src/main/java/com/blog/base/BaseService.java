@@ -1,8 +1,8 @@
 package com.blog.base;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Example;
-import org.springframework.util.ObjectUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,10 +38,10 @@ public abstract class BaseService<T> {
         if(data instanceof BaseDomain){
             ((BaseDomain) data).setLastUpdateTime(LocalDateTime.now());
         }
-        Optional<T> newData = this.dao.findById(((BaseDomain)data).getId());
-        if(newData.isPresent()){
-            return data;
-        }
+//        Optional<T> newData = this.dao.findById(((BaseDomain)data).getId());
+//        if(newData.isPresent()){
+//            return data;
+//        }
         data = this.dao.save(data);
         return data;
     }
@@ -62,4 +62,7 @@ public abstract class BaseService<T> {
         return this.dao.findAll();
     }
 
+    public Page<T> findAll(Example<T> example, Pageable pageable){
+        return this.dao.findAll(example,pageable);
+    }
 }

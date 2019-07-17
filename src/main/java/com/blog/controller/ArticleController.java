@@ -88,23 +88,25 @@ public class ArticleController extends BaseController<Article> {
 
     @PostMapping("/updateArticle")
     @ResponseBody
-    public Response updateArticle(int articleId, String title, String content, int authorId) {
-        Article article = articleService.get(articleId);
-        if (ObjectUtils.isEmpty(article)) {
+    public Response updateArticle(@RequestBody Article article) {
+        if(article==null){
             return new Response().success(null);
         }
-        if (article.getAuthorId() != authorId) {
+        Article oldArticle = articleService.get(article.getId());
+        if (ObjectUtils.isEmpty(oldArticle)) {
+            return new Response().success(null);
+        }
+        if (!article.getAuthorId().equals(article.getAuthorId())) {
             return new Response().error("不存在该帖子", null);
         }
-        if (!StringUtils.isEmpty(content)) {
-            article.setDescription(content.substring(0, content.length() >= 60 ? 60 : content.length()) + ".....");
-            contentService.update(article.getContentId(), content);
+        oldArticle.setDescription(article.getDescription());
+        oldArticle.setTitle(article.getTitle());
+        oldArticle.setCategoryId(article.getCategoryId());
+        if (!StringUtils.isEmpty(article.getContent())) {
+            contentService.update(oldArticle.getContentId(), article.getContent());
         }
-        if (!StringUtils.isEmpty(title) && !title.equals(article.getTitle())) {
-            article.setTitle(title);
-        }
-        this.articleService.update(article);
-        return new Response().success(article);
+        this.articleService.update(oldArticle);
+        return new Response().success(oldArticle);
     }
 
     /**
@@ -135,7 +137,7 @@ public class ArticleController extends BaseController<Article> {
             article.setCategoryId(categoryId);
         }
         Page<Article> articlePage = this.articleService.findAll(pageNum, 10, article);
-        logger.info("articlePage" + articlePage);
+        logger.info("articlePage" + articlePage.getContent());
         return new Response().success(articlePage);
     }
 
