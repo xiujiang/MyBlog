@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * author:xiujiang.liu
@@ -46,6 +47,9 @@ public class Article extends BaseDomain implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @Transient
+    List<Comment> comments;
 
     @Column(name = "create_time")
     private LocalDateTime createTime;

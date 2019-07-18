@@ -20,13 +20,16 @@ public class Comment extends BaseDomain {
     private Integer id;
 
     @Column(name = "article_id")
-    private int articleId;
+    private Integer articleId;
 
     @Column(name = "reply_author_id")
-    private int replyAuthorId;
+    private Integer replyAuthorId;
 
-    @Column(name = "content")
-    private int content;
+    @Column(name = "content_id")
+    private Integer contentId;
+
+    @Transient
+    private String content;
 
     @Column(name = "create_time")
     private LocalDateTime createTime;
@@ -34,4 +37,14 @@ public class Comment extends BaseDomain {
     @Column(name = "last_update_time")
     private LocalDateTime lastUpdateTime;
 
+    public Comment(Integer id, Integer articleId, Integer replyAuthorId, Integer contentId, String content) {
+        this.id = id;
+        this.articleId = articleId;
+        this.replyAuthorId = replyAuthorId;
+        this.contentId = contentId;
+        this.content = content;
+    }
+
+    public Comment() {
+    }
 }

@@ -5,10 +5,12 @@ import com.blog.base.BaseController;
 import com.blog.base.BaseService;
 import com.blog.base.Response;
 import com.blog.domain.Article;
+import com.blog.domain.Comment;
 import com.blog.domain.Content;
 import com.blog.enums.ArticleEnum;
 import com.blog.enums.FileEnum;
 import com.blog.service.ArticleService;
+import com.blog.service.CommentService;
 import com.blog.service.ContentService;
 import com.blog.service.UserService;
 import com.blog.utils.FileUtils;
@@ -51,6 +53,9 @@ public class ArticleController extends BaseController<Article> {
     ArticleService articleService;
 
     FileUtils fileUtils;
+
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     ArticleController(ArticleService articleService) {
@@ -161,6 +166,8 @@ public class ArticleController extends BaseController<Article> {
         if (!ObjectUtils.isEmpty(content)) {
             article.setContent(content.getContent());
         }
+        List<Comment> comments = commentService.getCommentsByArticleId(articleId);
+        article.setComments(comments);
         return new Response().success(article);
     }
 

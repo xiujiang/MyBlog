@@ -1,6 +1,10 @@
 package com.blog.base;
 
+import com.alibaba.fastjson.JSONObject;
+import com.blog.exception.ServiceException;
 import lombok.Data;
+
+import java.util.concurrent.Executors;
 
 /**
  * author:xiujiang.liu
@@ -29,7 +33,13 @@ public class Response<T> {
     public Response error(String err,T data){
         return new Response("10",err,data);
     }
-
+    public Response error(Exception e,T data){
+        if(e instanceof ServiceException){
+            return new Response(((ServiceException) e).getCode(),e.getMessage(),data);
+        }else{
+            return new Response("10",e.getMessage(),data);
+        }
+    }
     @Override
     public String toString() {
         return "Response{" +
