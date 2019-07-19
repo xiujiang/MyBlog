@@ -2,6 +2,7 @@ package com.blog.controller;
 
 import com.blog.base.BaseController;
 import com.blog.base.Response;
+import com.blog.dao.AnimalDao;
 import com.blog.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,10 @@ import com.blog.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController extends BaseController<User> {
+
+    @Autowired
+    AnimalDao animalDao;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     public UserController(UserService userService) {
@@ -74,4 +79,10 @@ public class UserController extends BaseController<User> {
         return new Response("00","退出成功",null);
     }
 
+    @GetMapping("/getUser")
+    @ResponseBody
+    public Response<User> getUser(Integer id){
+        System.out.println(animalDao.getById(1));
+        return new Response().success(this.userService.getUser(id));
+    }
 }

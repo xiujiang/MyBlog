@@ -50,4 +50,9 @@ public class UserService extends BaseService<User> {
         }
     }
 
+
+    public User getUser(Integer id ){
+//        return this.userDao.getUsers();
+        return null;
+    }
 }

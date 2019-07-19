@@ -2,6 +2,7 @@ package com.blog;
 
 import com.blog.convert.EnumConvert;
 import org.apache.naming.factory.BeanFactory;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,7 @@ import java.util.Iterator;
  * Date:2018/12/11
  * Time:23:54
  */
+//@MapperScan(basePackages ="com.blog.dao")
 @SpringBootApplication
 public class BlogApplication extends SpringBootServletInitializer {
 
