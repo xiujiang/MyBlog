@@ -1,4 +1,6 @@
 package com.blog.controller;
+import java.util.Map;
+import	java.util.logging.Level;
 
 import com.blog.base.BaseController;
 import com.blog.base.BaseService;
@@ -7,9 +9,7 @@ import com.blog.domain.Category;
 import com.blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 类别
@@ -35,6 +35,10 @@ public class CategoryController extends BaseController<Category> {
         return new Response().success(this.categoryService.findAll());
     }
 
+    @PostMapping("/getAllByLevel")
+    public Response getAllCategoryByLevel(Integer level,Integer parent){
+        return new Response().success(this.categoryService.getCategoryByLevel(level,parent));
+    }
 
 
 }

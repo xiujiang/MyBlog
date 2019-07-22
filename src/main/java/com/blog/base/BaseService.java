@@ -4,6 +4,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -65,4 +66,12 @@ public abstract class BaseService<T> {
     public Page<T> findAll(Example<T> example, Pageable pageable){
         return this.dao.findAll(example,pageable);
     }
+
+//    public List<T> findListByField(List<ConditionParam> conditionParams){
+//        Example<T> example;
+//        //通过反射把字段都放进去
+//
+//
+//    }
+
 }

@@ -28,6 +28,9 @@ public class Category extends BaseDomain {
     @Column(name = "level")
     private int level;
 
+    @Column(name = "parent")
+    private Integer parent;
+
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
